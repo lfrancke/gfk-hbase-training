@@ -10,6 +10,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
@@ -30,7 +31,15 @@ public class Step6 {
 
   private static void run(Table table) throws IOException {
     // 1. Delete all versions of the column "stats:reads" in row "1"
+    System.out.println("Deleting stats:reads...");
+    Delete delete = new Delete(Bytes.toBytes("1"));
+    delete.addColumns(Bytes.toBytes("stats"), Bytes.toBytes("reads"));
+    table.delete(delete);
+
     // 2. Delete the whole row with row key "2"
+    System.out.println("Deleting row 2...");
+    delete = new Delete(Bytes.toBytes("2"));
+    table.delete(delete);
   }
 
   private static void scanTable(Table table) throws IOException {
