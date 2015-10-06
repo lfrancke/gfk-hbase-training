@@ -22,6 +22,10 @@ public class Step1 {
 
   private static void run(Admin admin, TableName tableName) throws IOException {
     // Drop the "gfk" table
+    System.out.println("Disabling table...");
+    admin.disableTable(tableName);
+    System.out.println("Dropping table...");
+    admin.deleteTable(tableName);
   }
 
 }
